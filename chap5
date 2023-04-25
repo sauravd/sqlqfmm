@@ -1,3 +1,13 @@
   “What if we adjusted each product price by reducing it 5 percent?”
   
-  
+  SELECT productnumber, productname,productdescription,
+retailprice - (retailprice * 0.05) AS adjustedprice, quantityonhand, categoryid
+FROM products;
+
+
+
+“Show me a list of orders made by each customer in descending date order.”
+SELECT customerid, orderdate, ordernumber
+FROM orders
+ORDER BY customerid, orderdate DESC, ordernumber;
+
