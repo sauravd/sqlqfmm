@@ -21,5 +21,88 @@ vendstate || ',' || vendzipcode AS vendaddresses
 FROM vendors
 ORDER BY vendname 
 
+SET search_path = salesordersmodify, "$user", public;
 
+select * from product_vendors;
+
+SELECT productnumber, productname,productdescription,
+retailprice - (retailprice * 0.05) AS adjustedprice, quantityonhand, categoryid
+FROM products;
+
+select * from orders;
+
+SELECT customerid, orderdate, ordernumber
+FROM orders
+ORDER BY customerid, orderdate DESC, ordernumber;
+
+
+select * from vendors;
+
+SELECT vendname, vendstreetaddress || ',' || vendcity || ',' || 
+vendstate || ',' || vendzipcode AS vendaddresses
+FROM vendors
+ORDER BY vendname 
+
+SET search_path= entertainmentagencymodify, "$user", public;
+
+select * from customers;
+
+SELECT custfirstname || ' ' || custlastname AS customername, 
+custcity FROM customers
+ORDER BY custcity, customername
+
+select * from customers;
+
+SELECT custfirstname || ',' || custlastname AS customername,
+custcity FROM customers
+ORDER BY custcity, customername
+
+select * from entertainers;
+
+SELECT entertainerid, entstagename, entwebpage
+FROM entertainers
+ORDER BY entertainerid
+
+select * from agents;
+
+SELECT agtfirstname || ',' || agtlastname AS agentname, datehired,
+CAST(datehired + 180 AS DATE)AS sixmonthreviewdate
+FROM agents
+ORDER BY agentname;
+
+SELECT Concat(AgtLastName, ', ', AgtFirstName) AS Agent, DateHired, (DateHired + 180) AS FirstReview
+FROM Agents
+ORDER BY Agent;
+
+SET search_path = schoolschedulingmodify, "$user", public;
+
+SELECT * from staff;
+
+SELECT stffirstname || ',' ||stflastname AS staffmember, 
+salary FROM staff
+ORDER BY salary DESC, staffmember
+
+SELECT stffirstname || ',' ||stflastname AS staffmember,
+ '(' || stfareacode || ')' || stfphonenumber AS staffphone
+FROM staff
+ORDER BY staffmember;
+
+SELECT * FROM students;
+
+SELECT studfirstname || ' '||studlastname AS studentname,
+studcity FROM students
+ORDER BY studcity, studentname;
+
+SET search_path = bowlingleaguemodify, "$user", public;
+
+SELECT * FROM tournaments;
+SELECT tourneylocation, tourneydate, tourneydate + 365 AS nextyeartourneydate
+FROM tournaments
+ORDER BY tourneylocation;
+
+SELECT * FROM tourney_matches;
+SELECT * FROM match_games;
+
+SELECT * FROM teams;
+SELECT * FROM bowlers;
 
