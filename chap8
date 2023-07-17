@@ -26,9 +26,11 @@ FROM ((Customers INNER JOIN Orders
 “Display all orders, the products in each order, and 
 the amount owed for each product, in order number sequence.”
 
-SELECT Orders.OrderNumber, Order_Details.ProductNumber, Products.ProductName, 
-Products.RetailPrice 
+SELECT Orders.OrderNumber AS OrderNo, Orders.OrderDate,
+Order_Details.ProductNumber AS ProductNo, Products.ProductName AS Product,
+Order_Details.QuotedPrice AS Price, 
+Order_Details.QuantityOrdered * Order_Details.QuotedPrice AS AmountOwed
 FROM((Orders INNER JOIN
 	 Order_Details ON Orders.OrderNumber = Order_Details.OrderNumber)
 	INNER JOIN Products ON Order_Details.ProductNumber = Products.ProductNumber)
-ORDER BY Orders.OrderNumber
+ORDER BY OrderNo;
