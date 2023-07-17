@@ -12,3 +12,10 @@ SELECT Customers.CustFirstName || ' ' || Customers.CustLastName AS CustomerName,
 (Hint: The solution requires a JOIN of more than two tables.)
 You can find the solution in CH08_Employees_And_Customers (211 rows).
 
+SELECT DISTINCT Concat(Customers.CustFirstName, ' ', Customers.CustLastName) AS CustomerName,
+Concat(Employees.EmpFirstName, ' ', Employees.EmpLastName) AS EmployeeName, 
+Orders.OrderNumber, Orders.OrderDate
+FROM ((Customers INNER JOIN Orders
+	  ON Customers.CustomerID = Orders.CustomerID)
+	 INNER JOIN Employees 
+	  ON Employees.EmployeeID = Orders.EmployeeID)
