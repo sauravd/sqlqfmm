@@ -19,3 +19,16 @@ FROM ((Customers INNER JOIN Orders
 	  ON Customers.CustomerID = Orders.CustomerID)
 	 INNER JOIN Employees 
 	  ON Employees.EmployeeID = Orders.EmployeeID)
+
+
+
+
+“Display all orders, the products in each order, and 
+the amount owed for each product, in order number sequence.”
+
+SELECT Orders.OrderNumber, Order_Details.ProductNumber, Products.ProductName, 
+Products.RetailPrice 
+FROM((Orders INNER JOIN
+	 Order_Details ON Orders.OrderNumber = Order_Details.OrderNumber)
+	INNER JOIN Products ON Order_Details.ProductNumber = Products.ProductNumber)
+ORDER BY Orders.OrderNumber
