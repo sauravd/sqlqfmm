@@ -1,1 +1,14 @@
 “List customers and the dates they placed an order, sorted in order date sequence.”
+
+SELECT Customers.CustFirstName || ' ' || Customers.CustLastName AS CustomerName, Orders.OrderDate
+	FROM (Customers 
+	INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+) ORDER BY Orders.OrderDate;
+
+
+
+
+“List employees and the customers for whom they booked an order.” 
+(Hint: The solution requires a JOIN of more than two tables.)
+You can find the solution in CH08_Employees_And_Customers (211 rows).
+
