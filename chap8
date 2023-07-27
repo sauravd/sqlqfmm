@@ -51,5 +51,50 @@ WHERE Product_Vendors.WholesalePrice < 100;
 SELECT Concat(Customers.CustFirstName, ' ',Customers.CustLastName) AS CustFullName,
 Concat(Employees.EmpFirstName, ' ',Employees.EmpLastName) AS EmpFullName
 FROM Customers INNER JOIN Employees ON (Customers.CustLastName = Employees.EmpLastName);
-	
+
+
+
+“Show me customers and employees who live in the same city.”
+
+SELECT Concat(Customers.CustFirstName, ' ', Customers.CustLastName) AS CustFullName, 
+Customers.CustCity, 
+Concat(Employees.EmpFirstName, ' ', Employees.EmpLastName) AS EmpFullName, 
+Employees.EmpCity
+FROM Customers INNER JOIN Employees ON (Customers.CustCity = Employees.EmpCity);
+
+
+
+“Display agents and the engagement dates they booked, sorted by booking start date.”
+
+SELECT Concat(Agents.AgtFirstName, ' ', Agents.AgtLastName) AS AgentsName,
+Engagements.StartDate, Engagements.EndDate
+FROM Agents INNER JOIN Engagements ON 
+(Agents.AgentID = Engagements.AgentID)
+ORDER BY Engagements.StartDate
+
+List customers and the entertainers they booked.”
+
+SELECT DISTINCT Concat(Customers.CustFirstName, ' ', Customers.CustLastName) AS CustomersName,
+Entertainers.EntStageName 
+FROM ((Customers INNER JOIN Engagements ON
+	  Customers.CustomerID = Engagements.CustomerID)
+	 INNER JOIN Entertainers ON   
+	 Entertainers.EntertainerID = Engagements.EntertainerID)
+ORDER BY CustomersName;
+
+
+“Find the agents and entertainers who live in the same postal code.”
+
+SELECT Concat(Agents.AgtFirstName, ' ' , Agents.AgtLastName) AS AgentName,
+Entertainers.EntStageName, Agents.AgtZipCode, Entertainers.EntZipCode
+FROM Agents INNER JOIN Entertainers ON 
+	Agents.AgtZipCode = Entertainers.EntZipCode
+
+“Display buildings and all the classrooms in each building.”
+
+SELECT Buildings.BuildingName, Buildings.BuildingCode,
+Class_Rooms.ClassRoomID 
+FROM Class_Rooms INNER JOIN Buildings ON
+Class_Rooms.BuildingCode = Buildings.BuildingCode
+ORDER BY Buildings.BuildingName;
 
