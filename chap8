@@ -40,3 +40,8 @@ ORDER BY OrderNo;
 “Show me the vendors and the products they supply to 
 us for products that cost less than $100.”
 
+SELECT Vendors.VendName, Products.ProductName, Product_Vendors.WholesalePrice
+FROM (Vendors INNER JOIN Product_Vendors ON 
+	  (Vendors.VendorID = Product_Vendors.VendorID)) 
+	  INNER JOIN Products ON (Products.ProductNumber = Product_Vendors.ProductNumber)
+WHERE Product_Vendors.WholesalePrice < 100;
