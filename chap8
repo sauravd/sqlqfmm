@@ -98,3 +98,26 @@ FROM Class_Rooms INNER JOIN Buildings ON
 Class_Rooms.BuildingCode = Buildings.BuildingCode
 ORDER BY Buildings.BuildingName;
 
+
+“List students and all the classes in which they are currently enrolled.”
+
+SELECT Concat(Students.StudFirstName, ' ',Students.StudLastName) AS StudentName,
+Classes.ClassID, Subjects.SubjectName
+FROM(((Students INNER JOIN Student_Schedules ON 
+	  (Students.StudentID = Student_Schedules.StudentID))
+	 INNER JOIN Student_Class_Status ON
+	 (Student_Schedules.ClassStatus = Student_Class_Status. ClassStatus))
+	 INNER JOIN Classes ON 
+	 (Classes.ClassID = Student_Schedules.ClassID))
+	 INNER JOIN Subjects ON
+	 (Subjects.SubjectID = Classes.SubjectID)
+	 WHERE Student_Class_Status.ClassStatusDescription = 'Enrolled';
+
+“List the faculty staff and the subject each teaches.”
+
+SELECT Concat(Staff.StfFirstName,'  ',Staff.StfLastName), 
+Subjects.SubjectName
+FROM((Staff INNER JOIN Faculty_Subjects ON
+	 Staff.StaffID = Faculty_Subjects.StaffID)
+	INNER JOIN Subjects ON
+	Subjects.SubjectID = Faculty_Subjects.SubjectID)
