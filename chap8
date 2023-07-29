@@ -121,3 +121,35 @@ FROM((Staff INNER JOIN Faculty_Subjects ON
 	 Staff.StaffID = Faculty_Subjects.StaffID)
 	INNER JOIN Subjects ON
 	Subjects.SubjectID = Faculty_Subjects.SubjectID)
+
+
+
+“Show me the students who have a grade of 85 or better in art and who
+also have a grade of 85 or better in any computer course.”
+
+SELECT StudArt.StudFullName
+FROM (
+SELECT DISTINCT Students.StudentID,
+Concat(Students.StudLastName, ', ', Students.StudFirstName)AS StudFullName
+FROM(((Students INNER JOIN Student_Schedules
+	  ON Students.StudentID = Student_Schedules.StudentID)
+	 INNER JOIN Classes
+	 ON Classes.ClassID = Student_Schedules.ClassID)
+	INNER JOIN Subjects
+	ON Subjects.SubjectID = Classes.SubjectID)
+	INNER JOIN Categories
+	ON Categories.CategoryID = Subjects.CategoryID
+	WHERE Categories.CategoryDescription = 'Art'
+	AND Student_Schedules.Grade >= 85) StudArt
+INNER JOIN 
+(SELECT DISTINCT Student_Schedules.StudentID 
+FROM ((Student_Schedules INNER JOIN Classes ON
+	  Classes.ClassID = Student_Schedules.ClassID)
+	 INNER JOIN Subjects ON 
+	 Subjects.SubjectID = Classes.SubjectID)
+     INNER JOIN Categories ON
+     Categories.CategoryID = Subjects.CategoryID
+     WHERE Categories.CategoryDescription LIKE '%Computer%'
+     AND Student_Schedules.Grade >= 85) StudCS ON
+	 StudArt.StudentID = StudCS.StudentID;
+	 
