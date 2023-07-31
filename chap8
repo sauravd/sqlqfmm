@@ -152,4 +152,114 @@ FROM ((Student_Schedules INNER JOIN Classes ON
      WHERE Categories.CategoryDescription LIKE '%Computer%'
      AND Student_Schedules.Grade >= 85) StudCS ON
 	 StudArt.StudentID = StudCS.StudentID;
-	 
+
+
+“Display the bowlers, the matches they played in, and the bowler game scores.”
+
+SELECT Concat(Bowlers.BowlerLastName, ' ', Bowlers.BowlerFirstName)AS BowlerFullName,
+Tourney_Matches.MatchID, Bowler_Scores.RawScore
+FROM((Bowlers INNER JOIN Bowler_Scores ON
+	 Bowlers.BowlerID = Bowler_Scores.BowlerID)
+	INNER JOIN Tourney_Matches ON
+	Bowler_Scores.MatchID = Tourney_Matches.MatchID)
+
+“Find the bowlers who live in the same ZIP Code.”
+SELECT Concat(Bowlers.BowlerLastName, ' ', Bowlers.BowlerFirstName) AS FirstBowler,
+Bowlers.BowlerZip,
+Concat(Bowlers2.BowlerLastName, ' ', Bowlers2.BowlerFirstName) AS SecondBowler
+FROM Bowlers INNER JOIN Bowlers AS Bowlers2
+ON Bowlers.BowlerID <> Bowlers2.BowlerID
+AND Bowlers.BowlerZip = Bowlers2.BowlerZip;
+
+
+“List all the recipes for salads.”
+SELECT Recipes.RecipeTitle
+FROM Recipes INNER JOIN 
+Recipe_Classes ON Recipes.RecipeClassID = Recipe_Classes.RecipeClassID
+WHERE Recipe_Classes.RecipeClassDescription = 'Salad';
+
+
+
+“List all recipes that contain a dairy ingredient.”
+SELECT DISTINCT Recipes.RecipeTitle
+FROM Recipes INNER JOIN 
+			 Recipe_Ingredients ON Recipes.RecipeID = Recipe_Ingredients.RecipeID INNER JOIN 
+			 Ingredients ON Ingredients.IngredientID = Recipe_Ingredients.IngredientID INNER JOIN 
+			 Ingredient_Classes ON Ingredients.IngredientClassID = Ingredient_Classes.IngredientClassID
+	WHERE (Ingredient_Classes.IngredientClassDescription = 'Dairy');
+
+
+
+SET search_path = recipesexample, "$user", public;
+
+
+
+
+SELECT Concat(Bowlers.BowlerLastName, ' ', Bowlers.BowlerFirstName)AS BowlerFullName,
+Teams.TeamName FROM(
+Teams INNER JOIN Bowlers ON
+Bowlers.TeamID = Teams.TeamID)
+
+
+“Display the bowlers, the matches they played in, and the bowler game scores.”
+
+SELECT Concat(Bowlers.BowlerLastName, ' ', Bowlers.BowlerFirstName)AS BowlerFullName,
+Tourney_Matches.MatchID, Bowler_Scores.RawScore
+FROM((Bowlers INNER JOIN Bowler_Scores ON
+	 Bowlers.BowlerID = Bowler_Scores.BowlerID)
+	INNER JOIN Tourney_Matches ON
+	Bowler_Scores.MatchID = Tourney_Matches.MatchID)
+
+
+SELECT Bowler_Scores.MatchID, Teams.TeamName, 
+Concat(Bowlers.BowlerFirstName, ' ', Bowlers.BowlerLastName) AS BowlerFullName, 
+Bowler_Scores.GameNumber, Bowler_Scores.RawScore
+FROM Teams INNER JOIN
+Bowlers ON Teams.TeamID = Bowlers.TeamID INNER JOIN
+Bowler_Scores ON Bowlers.BowlerID = Bowler_Scores.BowlerID;
+
+“Find the bowlers who live in the same ZIP Code.”
+SELECT Concat(Bowlers.BowlerLastName, ' ', Bowlers.BowlerFirstName) AS FirstBowler,
+Bowlers.BowlerZip,
+Concat(Bowlers2.BowlerLastName, ' ', Bowlers2.BowlerFirstName) AS SecondBowler
+FROM Bowlers INNER JOIN Bowlers AS Bowlers2
+ON Bowlers.BowlerID <> Bowlers2.BowlerID
+AND Bowlers.BowlerZip = Bowlers2.BowlerZip;
+
+“List all the recipes for salads.”
+SELECT * FROM Recipe_Classes;
+
+SELECT Recipes.RecipeTitle
+FROM Recipes INNER JOIN 
+Recipe_Classes ON Recipes.RecipeClassID = Recipe_Classes.RecipeClassID
+WHERE Recipe_Classes.RecipeClassDescription = 'Salad';
+
+SELECT     Recipes.RecipeTitle
+FROM         Recipes INNER JOIN
+                      Recipe_Classes ON 
+					  Recipes.RecipeClassID = Recipe_Classes.RecipeClassID
+WHERE     (Recipe_Classes.RecipeClassDescription = 'Salad');
+
+
+“List all recipes that contain a dairy ingredient.”
+
+SELECT * FROM Ingredient_Classes;
+
+SELECT DISTINCT Recipes.RecipeTitle
+FROM Recipes INNER JOIN 
+			 Recipe_Ingredients ON Recipes.RecipeID = Recipe_Ingredients.RecipeID INNER JOIN 
+			 Ingredients ON Ingredients.IngredientID = Recipe_Ingredients.IngredientID INNER JOIN 
+			 Ingredient_Classes ON Ingredients.IngredientClassID = Ingredient_Classes.IngredientClassID
+	WHERE (Ingredient_Classes.IngredientClassDescription = 'Dairy');
+
+
+
+SELECT DISTINCT Recipes.RecipeTitle
+FROM         Recipes INNER JOIN
+                      Recipe_Ingredients ON Recipes.RecipeID = Recipe_Ingredients.RecipeID INNER JOIN
+                      Ingredients ON Ingredients.IngredientID = Recipe_Ingredients.IngredientID INNER JOIN
+                      Ingredient_Classes ON Ingredient_Classes.IngredientClassID = Ingredients.IngredientClassID
+WHERE     (Ingredient_Classes.IngredientClassDescription = 'Dairy');
+
+
+
